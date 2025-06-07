@@ -1,0 +1,9 @@
+[build]
+  publish = "." # This means Netlify will serve files directly from the root of your repo
+  # If you decide to put your HTML files in a folder like 'public' or 'dist',
+  # you would change this to: publish = "public" (or "dist")
+
+[functions]
+  directory = "netlify/functions" # This is the folder where Netlify will find your functions
+  node_bundler = "esbuild" # Recommended for faster Python function builds
+  python_version = "3.9" # Specify your Python version (e.g., 3.9, 3.10)
