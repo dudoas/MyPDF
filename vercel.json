@@ -6,8 +6,10 @@
     }
   ],
   "functions": {
-    "api/**/*.js": {
+    "api/pdf_to_text.js": {
       "runtime": "node@18.x"
     }
+    // If you had other Vercel functions in 'api/', you would list them here too.
+    // Example: "api/another_function.js": { "runtime": "node@18.x" }
   }
 }
