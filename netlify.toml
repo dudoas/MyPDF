@@ -1,0 +1,9 @@
+[build]
+  publish = "." # Tells Netlify to serve files from the root directory
+  command = "echo 'Building static site...'" # A dummy command since it's a static site, but Netlify requires one.
+
+# Optional: Basic redirect to ensure all paths fall back to index.html for a SPA-like feel
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
