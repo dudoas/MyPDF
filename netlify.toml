@@ -2,5 +2,5 @@
   publish = "." # Your HTML files are in the root
 
 [functions]
-  directory = "netlify/functions/" # Your functions are nested inside 'netlify' folder
+  directory = "/functions/" # Your functions are nested inside 'netlify' folder
   node_bundler = "esbuild" # Optional but recommended
