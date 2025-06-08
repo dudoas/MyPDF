@@ -1,2 +1,1 @@
-PyPDF2==3.0.1
-PyMuPDF==1.23.21
+# Empty for this test, as json is built-in
