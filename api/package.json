@@ -1,0 +1,10 @@
+{
+  "name": "vercel-frontend-functions",
+  "version": "1.0.0",
+  "description": "Node.js functions for Vercel frontend (e.g., PDF to Text)",
+  "main": "pdf_to_text.js",
+  "dependencies": {
+    "pdf-parse": "^1.1.1",
+    "axios": "^0.27.2"
+  }
+}
