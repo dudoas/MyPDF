@@ -300,7 +300,7 @@
 
             <!-- Mobile Menu Button (functionality removed, just a visual button) -->
             <button class="md:hidden p-2 rounded-md hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-red-500">
-                <svg class="w-6 h-6 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <svg class="w-6 h-6 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 48 48" aria-hidden="true">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
                 </svg>
             </button>
@@ -460,7 +460,7 @@
         }
 
         /**
-         * Handles PDF compression by sending the file to the Netlify Function.
+         * Handles PDF compression by sending the file to the Node.js Flask Backend.
          */
         async function compressPdf() {
             if (!selectedPdfFile) {
@@ -478,7 +478,6 @@
                 const uint8Array = new Uint8Array(arrayBuffer);
 
                 // Convert Uint8Array to a binary string in chunks to avoid stack overflow for large files
-                // This is a more robust way to handle large files for btoa
                 let binaryString = '';
                 const chunkSize = 1024 * 64; // 64KB chunks
                 for (let i = 0; i < uint8Array.length; i += chunkSize) {
@@ -488,12 +487,16 @@
 
                 const payload = {
                     pdfFileBase64: base64Pdf,
-                    compressionLevel: currentCompressionLevel, // Use the dynamically selected level
+                    compressionLevel: currentCompressionLevel, // Send the dynamically selected level
                     fileName: selectedPdfFile.name // Pass original file name for response
                 };
 
-                // The URL for Netlify Functions is typically /.netlify/functions/<function-name>
-                const response = await fetch('/.netlify/functions/compress_pdf', {
+                // --- IMPORTANT CHANGE HERE: NEW BACKEND ENDPOINT ---
+                // Replace 'YOUR_HEROKU_BACKEND_URL' with the actual URL of your deployed Flask app (e.g., from Heroku/Render)
+                const backendUrl = 'YOUR_HEROKU_BACKEND_URL/compress-pdf'; // Placeholder, replace with your actual URL
+                // Example: const backendUrl = 'https://mypdftools-backend-api.herokuapp.com/compress-pdf';
+
+                const response = await fetch(backendUrl, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -502,23 +505,20 @@
                 });
 
                 if (!response.ok) {
-                    const errorData = await response.json().catch(() => ({ error: 'Unknown Netlify Function error' }));
-                    throw new Error(errorData.error || `Netlify Function responded with status ${response.status}`);
+                    const errorData = await response.json().catch(() => ({ error: 'Unknown backend error' }));
+                    throw new Error(errorData.error || `Backend responded with status ${response.status}`);
                 }
 
-                // The Netlify function will return the compressed PDF as base64 in a JSON object.
                 const responseBody = await response.json(); 
 
                 if (!responseBody.body || !responseBody.isBase64Encoded) {
-                     throw new Error('Invalid response from Netlify Function. Expected base64 encoded PDF body within JSON.');
+                     throw new Error('Invalid response from backend. Expected base64 encoded PDF body within JSON.');
                 }
 
-                // Decode the base64 content received from the function
                 const compressedPdfBytes = Uint8Array.from(atob(responseBody.body), c => c.charCodeAt(0));
                 const compressedPdfBlob = new Blob([compressedPdfBytes], { type: 'application/pdf' });
                 const compressedPdfUrl = URL.createObjectURL(compressedPdfBlob);
 
-                // Get filename and sizes from the responseBody
                 const filename = responseBody.fileName || `compressed_${selectedPdfFile.name}`;
                 const returnedOriginalSize = responseBody.originalSize || selectedPdfFile.size;
                 const returnedCompressedSize = responseBody.compressedSize || compressedPdfBlob.size;
@@ -536,12 +536,11 @@
                 downloadSection.classList.remove('hidden');
                 displayMessage('PDF compressed successfully! Click "Download Compressed PDF".', 'success');
 
-                // Clean up the object URL after a delay (e.g., 30 seconds)
                 setTimeout(() => URL.revokeObjectURL(compressedPdfUrl), 30000);
 
             } catch (error) {
                 console.error('Error during PDF compression:', error);
-                displayMessage(`Failed to compress PDF: ${error.message}. Please check Netlify Function logs for details.`, 'error');
+                displayMessage(`Failed to compress PDF: ${error.message}. Please check backend server logs for details.`, 'error');
             } finally {
                 compressButton.disabled = false;
             }
