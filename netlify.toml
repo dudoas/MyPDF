@@ -1,6 +1,6 @@
+# netlify.toml
 [build]
-  publish = "." # Your HTML files are in the root
+  publish = "." # Your HTML files are at the root
 
 [functions]
-  directory = "functions/" # Your functions are nested inside 'netlify' folder
-  node_bundler = "esbuild" # Optional but recommended
+  directory = "netlify/functions"
