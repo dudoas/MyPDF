@@ -10,4 +10,7 @@
   "engines": {
     "node": "18.x"
   }
+  // Make sure there is NO "type": "module" line here.
+  // If you explicitly want to ensure it's CommonJS, you could add:
+  // "type": "commonjs"
 }
