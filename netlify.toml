@@ -1,12 +1,12 @@
 # netlify.toml
 [build]
-  # This tells Netlify to serve your static files (HTML, CSS, JS) from the root of your repository.
   publish = "."
-  # IMPORTANT: Ensure there is NO 'command' line here if you had one.
-  # We want Netlify to use its default static site build, and only look for functions.
 
 [functions]
-  # This tells Netlify where to find your serverless functions (Node.js in this case).
   directory = "netlify/functions"
-  # Use esbuild for faster bundling of Node.js functions.
   node_bundler = "esbuild"
+
+# This plugin automatically installs Node.js dependencies
+# within your Netlify Functions directory (netlify/functions/package.json)
+[[plugins]]
+package = "@netlify/plugin-functions-install-core"
