@@ -378,9 +378,12 @@
                 }
 
                 const result = await response.json();
-                // CORRECTED: Extract fileContentBase64 and then decode it
+                // CORRECTED: Extract fileContentBase64 and then decode it using TextDecoder
                 const extractedTextBase64 = result.fileContentBase64 || ''; 
-                const extractedText = atob(extractedTextBase64); // Decode base64 to plain text
+                // Convert base64 string to a Uint8Array
+                const decodedBytes = Uint8Array.from(atob(extractedTextBase64), c => c.charCodeAt(0));
+                // Use TextDecoder to correctly decode UTF-8 bytes into a JavaScript string
+                const extractedText = new TextDecoder('utf-8').decode(decodedBytes);
 
                 const outputFileName = result.fileName || `${selectedPdfFile.name.replace(/\.pdf$/, '')}.txt`;
 
@@ -388,7 +391,7 @@
                 extractedTextSection.classList.remove('hidden');
 
                 // Create a Blob for the text file and a download link
-                const textBlob = new Blob([extractedText], { type: 'text/plain' });
+                const textBlob = new Blob([extractedText], { type: 'text/plain;charset=utf-8' }); // Specify UTF-8 charset for the blob
                 const textUrl = URL.createObjectURL(textBlob);
 
                 downloadTextLink.href = textUrl;
