@@ -251,7 +251,7 @@
             </div>
 
             <!-- Action Button -->
-            <button id="convertToTextButton" class="action-button" onclick="window.convertToText()" disabled>
+            <button id="convertToTextButton" class="action-button" disabled>
                 Convert to Text
             </button>
 
@@ -280,6 +280,9 @@
         let extractedTextSection;
         let extractedTextArea;
         let downloadTextLink;
+
+        // Backend URL for PDF to Text
+        const BACKEND_URL_PDF_TO_TEXT = 'https://thepdftoolsbackend.onrender.com/pdf-to-text';
 
         // Helper function to format file size
         function formatBytes(bytes, decimals = 2) {
@@ -361,9 +364,7 @@
                 };
 
                 // --- BACKEND ENDPOINT FOR RENDER.COM ---
-                const backendUrl = 'https://mypdfbackend.onrender.com/pdf-to-text'; // Correct endpoint
-
-                const response = await fetch(backendUrl, {
+                const response = await fetch(BACKEND_URL_PDF_TO_TEXT, { // Use the dedicated URL
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -382,8 +383,8 @@
                     throw new Error('No extracted text found in backend response.');
                 }
                 // --- CORRECTED DECODING FOR UTF-8 TEXT ---
-                const decodedBytes = Uint8Array.from(atob(base64ExtractedText), c => c.charCodeAt(0));
-                const extractedText = new TextDecoder('utf-8').decode(decodedBytes);
+                // Decode from base64 to a UTF-8 string
+                const extractedText = new TextDecoder('utf-8').decode(Uint8Array.from(atob(base64ExtractedText), c => c.charCodeAt(0)));
                 // --- END CORRECTED DECODING ---
 
                 const outputFileName = result.fileName || `${selectedPdfFile.name.replace(/\.pdf$/, '')}.txt`;
@@ -428,6 +429,7 @@
             }
             if (files.length > 1) {
                 displayMessage('Only one PDF file can be selected for conversion.', 'error');
+                selectedPdfFile = null;
                 pdfFileInput.value = ''; // Clear input
                 updateSelectedFileDisplay();
                 return;
@@ -453,9 +455,8 @@
             downloadTextLink = document.getElementById('downloadTextLink');
 
             // Attach event listeners
-            pdfFileInput.addEventListener('change', window.handleFileChange);
-            // The onclick="window.convertToText()" is already in HTML, so no need for addEventListener here
-            // convertToTextButton.addEventListener('click', window.convertToText);
+            pdfFileInput.addEventListener('change', handleFileChange);
+            convertToTextButton.addEventListener('click', convertToText); // Use addEventListener directly
 
             // Drag and Drop
             dropArea.addEventListener('dragover', (e) => {
@@ -489,15 +490,12 @@
                             files: files
                         }
                     };
-                    window.handleFileChange(mockChangeEvent);
+                    handleFileChange(mockChangeEvent);
                 }
             });
 
             // Initial UI state
             updateSelectedFileDisplay();
-
-            // Expose function to global window for inline onclick
-            // window.convertToText = convertToText; 
         });
     </script>
 </body>
