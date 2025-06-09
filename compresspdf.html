@@ -3,92 +3,58 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Compress PDF - My PDF Tools</title>
+    <title>Convert PDF to Text - My PDF Tools</title>
     <!-- Load Tailwind CSS from CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #f0f2f5; /* Light background */
+            background-color: #f0f2f5;
             display: flex;
-            flex-direction: column; /* Allow stacking header and main content */
-            justify-content: flex-start; /* Align content from the top */
-            align-items: center; /* Center horizontally */
-            min-height: 100vh; /* Ensure it takes full viewport height */
-            padding: 0; /* Remove padding from body, use on sections */
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            min-height: 100vh;
+            padding: 0;
             color: #333;
         }
         .header-container {
-            width: 100%; /* Make header span full width */
-            padding: 1rem 2rem; /* Add padding to header */
-            margin-bottom: 1rem; /* Space below header */
+            width: 100%;
+            padding: 1rem 2rem;
+            margin-bottom: 1rem;
         }
         .main-content-wrapper {
-            flex-grow: 1; /* Allow main content to take remaining vertical space */
+            flex-grow: 1;
             display: flex;
             justify-content: center;
-            align-items: flex-start; /* Align the container to the top within its wrapper */
+            align-items: flex-start;
             width: 100%;
-            padding: 1rem 2rem; /* Padding for the main content area */
-            box-sizing: border-box; /* Include padding in element's total width and height */
+            padding: 1rem 2rem;
+            box-sizing: border-box;
         }
         .container {
             background-color: #ffffff;
-            border-radius: 1rem; /* More rounded corners */
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); /* Softer, larger shadow */
-            padding: 2.5rem; /* Increased padding */
-            max-width: 1200px; /* Wider for potential two-column layout mimic */
+            border-radius: 1rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            padding: 2.5rem;
+            max-width: 800px; /* Adjusted for single column */
             width: 100%;
             text-align: center;
-            animation: fadeIn 0.5s ease-out; /* Simple fade-in animation */
-            margin: auto; /* Auto margins for vertical centering when flex-grow is on */
-            display: flex; /* Make container a flex container itself for layout */
-            flex-direction: row; /* Default to row for wider screen layout */
-            gap: 2rem; /* Space between workarea and sidebar */
-            align-items: flex-start; /* Align items to the top */
-        }
-
-        .tool__workarea {
-            flex: 3; /* Take more space */
+            animation: fadeIn 0.5s ease-out;
+            margin: auto;
             display: flex;
-            flex-direction: column;
-            align-items: center;
+            flex-direction: column; /* Single column layout */
             gap: 1.5rem;
+            align-items: center;
         }
-
-        .tool__sidebar {
-            flex: 1; /* Take less space, for options */
-            min-width: 250px;
-            max-width: 300px;
-            background-color: #f9fafb;
-            border-radius: 0.75rem;
-            padding: 1.5rem;
-            box-shadow: inset 0 0 5px rgba(0,0,0,0.05);
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-        }
-
-        @media (max-width: 768px) {
-            .container {
-                flex-direction: column; /* Stack vertically on smaller screens */
-                align-items: center;
-            }
-            .tool__sidebar {
-                width: 100%;
-                max-width: 100%; /* Full width on small screens */
-            }
-        }
-
-
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
         .file-input-label {
-            background-color: #f3f4f6; /* Light gray for upload area */
-            border: 2px dashed #d1d5db; /* Dashed border */
+            background-color: #f3f4f6;
+            border: 2px dashed #d1d5db;
             border-radius: 0.75rem;
             padding: 2rem;
             cursor: pointer;
@@ -97,7 +63,7 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            width: 100%; /* Take full width of its parent (.tool__workarea) */
+            width: 100%;
             min-height: 200px;
         }
         .file-input-label.drag-over {
@@ -105,7 +71,7 @@
             border-color: #3b82f6;
         }
         .action-button {
-            background-image: linear-gradient(to right, #22c55e, #16a34a); /* Green gradient */
+            background-image: linear-gradient(to right, #3b82f6, #2563eb); /* Blue gradient */
             color: white;
             padding: 0.85rem 2rem;
             border-radius: 0.75rem;
@@ -114,7 +80,7 @@
             transition: transform 0.2s, box-shadow 0.2s;
             width: 100%;
             display: block;
-            margin-top: 1.5rem; /* Space above button */
+            margin-top: 1.5rem;
             max-width: 300px;
             margin-left: auto;
             margin-right: auto;
@@ -153,7 +119,6 @@
             background-color: #fee2e2;
             color: #991b1b;
         }
-
         .selected-file-display {
             display: flex;
             align-items: center;
@@ -165,86 +130,25 @@
             padding: 1rem;
             width: 100%;
         }
-
         .pdf-icon {
             width: 40px;
             height: 40px;
             color: #ef4444;
         }
-
         .file-details {
             display: flex;
             flex-direction: column;
             align-items: flex-start;
         }
-
         .file-name {
             font-weight: 600;
             color: #333;
             word-break: break-all;
         }
-
         .file-size-info {
             font-size: 0.85rem;
             color: #6b7280;
         }
-
-        /* iLovePDF-like Options Panel Styling */
-        .option__panel {
-            width: 100%;
-            text-align: left;
-        }
-        .option__panel__title {
-            font-size: 1.125rem; /* text-lg */
-            font-weight: 600; /* font-semibold */
-            color: #333;
-            margin-bottom: 1rem;
-        }
-        .option__select {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-            display: flex;
-            flex-direction: column;
-            gap: 0.75rem; /* Space between list items */
-        }
-        .option__select__item {
-            background-color: #fff;
-            border: 2px solid #e5e7eb; /* Light gray border */
-            border-radius: 0.5rem;
-            padding: 1rem;
-            cursor: pointer;
-            transition: all 0.2s ease-in-out;
-            text-align: left;
-        }
-        .option__select__item:hover {
-            border-color: #a7a7a7; /* Darker gray on hover */
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-        }
-        .option__select__item.selected {
-            border-color: #3b82f6; /* Blue border when selected */
-            background-color: #eff6ff; /* Light blue background */
-            box-shadow: 0 0 0 3px #bfdbfe; /* Blue glow effect */
-        }
-        .option__select__item__title {
-            font-weight: 600;
-            color: #333;
-            margin-bottom: 0.25rem;
-        }
-        .option__description {
-            font-size: 0.85rem;
-            color: #6b7280;
-        }
-        .gobutton {
-            background-color: #f3f4f6; /* Light gray background */
-            border-radius: 0.75rem;
-            padding: 1rem;
-            text-align: center;
-            font-weight: 500;
-            color: #4b5563;
-            margin-top: 1.5rem; /* Space below options */
-        }
-
         .download-section {
             margin-top: 1.5rem;
             width: 100%;
@@ -252,9 +156,8 @@
             flex-direction: column;
             align-items: center;
         }
-
         .download-section a {
-            background-color: #3b82f6; /* Blue for download button */
+            background-color: #3b82f6;
             color: white;
             padding: 0.85rem 2rem;
             border-radius: 0.75rem;
@@ -265,16 +168,30 @@
             max-width: 300px;
             width: 100%;
         }
-
         .download-section a:hover {
             transform: translateY(-3px);
             box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+        }
+        .extracted-text-area {
+            width: 100%;
+            min-height: 200px;
+            max-height: 400px; /* Limit height for scrollability */
+            overflow-y: auto; /* Enable scrolling */
+            border: 1px solid #e5e7eb;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            text-align: left;
+            font-size: 0.9rem;
+            color: #4b5563;
+            background-color: #f9fafb;
+            white-space: pre-wrap; /* Preserve whitespace and line breaks */
+            word-break: break-word; /* Break long words */
         }
     </style>
 </head>
 <body class="antialiased">
 
-    <!-- Header Section (Copied from main page) -->
+    <!-- Header Section -->
     <header class="header-container bg-white shadow-sm rounded-lg m-2">
         <div class="flex justify-between items-center px-4 py-2">
             <!-- Brand Logo/Name -->
@@ -289,6 +206,7 @@
                 <a href="index.html" class="text-gray-700 hover:text-red-600 font-medium transition-colors duration-300">Home</a>
                 <a href="splitpdf.html" class="text-gray-700 hover:text-red-600 font-medium transition-colors duration-300">Split PDF</a>
                 <a href="mergepdf.html" class="text-gray-700 hover:text-red-600 font-medium transition-colors duration-300">Merge PDF</a>
+                <a href="compresspdf.html" class="text-gray-700 hover:text-red-600 font-medium transition-colors duration-300">Compress PDF</a>
                 <a href="pdf-to-text.html" class="text-gray-700 hover:text-red-600 font-medium transition-colors duration-300">PDF to Text</a>
             </nav>
 
@@ -300,7 +218,7 @@
 
             <!-- Mobile Menu Button (functionality removed, just a visual button) -->
             <button class="md:hidden p-2 rounded-md hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-red-500">
-                <svg class="w-6 h-6 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 48 48" aria-hidden="true">
+                <svg class="w-6 h-6 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
                 </svg>
             </button>
@@ -309,64 +227,40 @@
 
     <div class="main-content-wrapper">
         <div class="container">
-            <!-- Tool Workarea (Left/Main Content) -->
-            <div class="tool__workarea">
-                <h1 class="text-3xl font-extrabold text-gray-900 mb-4">Compress PDF files</h1>
-                <h2 class="text-gray-600 mb-6">Reduce file size while optimizing for maximal PDF quality.</h2>
+            <h1 class="text-3xl font-extrabold text-gray-900 mb-4">Convert PDF to Text</h1>
+            <h2 class="text-gray-600 mb-6">Extract text from your PDF document.</h2>
 
-                <input type="file" id="pdfFileInput" accept=".pdf" class="hidden">
-                <label for="pdfFileInput" class="file-input-label">
-                    <svg class="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true">
-                        <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28m0 0l4 4m-4-4l-1.621-1.621a4 4 0 00-5.656 0L15 32m0 0l-3 3m0 0l-3 3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                    </svg>
-                    <p class="mt-1 text-sm text-gray-600">Drag & drop your PDF here, or click to browse</p>
-                    <p class="text-xs text-gray-500">Only one PDF file allowed</p>
-                </label>
+            <input type="file" id="pdfFileInput" accept=".pdf" class="hidden">
+            <label for="pdfFileInput" class="file-input-label">
+                <svg class="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true">
+                    <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28m0 0l4 4m-4-4l-1.621-1.621a4 4 0 00-5.656 0L15 32m0 0l-3 3m0 0l-3 3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+                <p class="mt-1 text-sm text-gray-600">Drag & drop your PDF here, or click to browse</p>
+                <p class="text-xs text-gray-500">Only one PDF file allowed</p>
+            </label>
 
-                <div id="selectedFileDisplay" class="selected-file-display hidden">
-                    <svg class="pdf-icon" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                        <polyline points="14 2 14 8 20 8"></polyline>
-                    </svg>
-                    <div class="file-details">
-                        <span id="fileName" class="file-name"></span>
-                        <span id="fileSize" class="file-size-info"></span>
-                    </div>
-                </div>
-
-                <!-- Action Button -->
-                <button id="compressButton" class="action-button" onclick="window.compressPdf()" disabled>
-                    Compress PDF
-                </button>
-
-                <div id="messageBox" class="message hidden"></div>
-
-                <div id="downloadSection" class="download-section hidden">
-                    <p class="text-gray-600 mb-4" id="compressionResult"></p>
-                    <a id="downloadLink" href="#" class="action-button" style="background-image: none; background-color: #3b82f6;">Download Compressed PDF</a>
+            <div id="selectedFileDisplay" class="selected-file-display hidden">
+                <svg class="pdf-icon" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                    <polyline points="14 2 14 8 20 8"></polyline>
+                </svg>
+                <div class="file-details">
+                    <span id="fileName" class="file-name"></span>
+                    <span id="fileSize" class="file-size-info"></span>
                 </div>
             </div>
 
-            <!-- Sidebar (Right - for compression options) -->
-            <div id="sidebar" class="tool__sidebar">
-                <div class="option__panel" id="compress-options">
-                    <div class="option__panel__title">Compression level</div>
-                    <ul class="option__select" id="compressionLevelSelect">
-                        <li class="option__select__item" data-value="less">
-                            <div class="option__select__item__title">Less compression</div>
-                            <div class="option__description">High quality, less compression</div>
-                        </li>
-                        <li class="option__select__item selected" data-value="recommended">
-                            <div class="option__select__item__title">Recommended Compression</div>
-                            <div class="option__description">Good quality, good compression</div>
-                        </li>
-                        <li class="option__select__item" data-value="extreme">
-                            <div class="option__select__item__title">Extreme Compression</div>
-                            <div class="option__description">Less quality, high compression</div>
-                        </li>
-                    </ul>
-                </div>
-                <div class="gobutton">Click on COMPRESS PDF button</div>
+            <!-- Action Button -->
+            <button id="convertToTextButton" class="action-button" onclick="window.convertToText()" disabled>
+                Convert to Text
+            </button>
+
+            <div id="messageBox" class="message hidden"></div>
+
+            <div id="extractedTextSection" class="download-section hidden">
+                <p class="text-gray-600 mb-2">Extracted Text:</p>
+                <textarea id="extractedTextArea" class="extracted-text-area" readonly></textarea>
+                <a id="downloadTextLink" href="#" class="action-button" style="background-image: none; background-color: #3b82f6; margin-top: 1rem;">Download Text File</a>
             </div>
         </div>
     </div>
@@ -374,8 +268,6 @@
     <script>
         // Global variables
         let selectedPdfFile = null;
-        let originalPdfSize = 0; // In bytes
-        let currentCompressionLevel = 'recommended'; // Default selected level
 
         // Element references
         let pdfFileInput;
@@ -383,13 +275,11 @@
         let selectedFileDisplay;
         let fileNameSpan;
         let fileSizeSpan;
-        let compressionOptionsDiv;
-        let compressionLevelList; // Changed from select to ul
-        let compressButton;
+        let convertToTextButton;
         let messageBox;
-        let downloadSection;
-        let downloadLink;
-        let compressionResultPara;
+        let extractedTextSection;
+        let extractedTextArea;
+        let downloadTextLink;
 
         // Helper function to format file size
         function formatBytes(bytes, decimals = 2) {
@@ -421,56 +311,36 @@
         }
 
         /**
-         * Handles the click event on compression level items.
-         * @param {Event} event The click event.
-         */
-        function handleCompressionLevelSelect(event) {
-            // Remove 'selected' class from all items
-            Array.from(compressionLevelList.children).forEach(item => {
-                item.classList.remove('selected');
-            });
-
-            // Add 'selected' class to the clicked item and update currentCompressionLevel
-            let targetItem = event.target.closest('.option__select__item');
-            if (targetItem) {
-                targetItem.classList.add('selected');
-                currentCompressionLevel = targetItem.dataset.value;
-            }
-        }
-
-        /**
          * Updates the UI to show the selected PDF file's details.
          */
         function updateSelectedFileDisplay() {
             if (selectedPdfFile) {
                 fileNameSpan.textContent = selectedPdfFile.name;
-                fileSizeSpan.textContent = `Original Size: ${formatBytes(selectedPdfFile.size)}`;
-                originalPdfSize = selectedPdfFile.size;
+                fileSizeSpan.textContent = `Size: ${formatBytes(selectedPdfFile.size)}`;
                 selectedFileDisplay.classList.remove('hidden');
-                // compressionOptionsDiv.classList.remove('hidden'); // Sidebar is always visible
-                compressButton.disabled = false;
-                downloadSection.classList.add('hidden'); // Hide download section until compressed
+                convertToTextButton.disabled = false;
+                extractedTextSection.classList.add('hidden'); // Hide extracted text section until converted
+                extractedTextArea.value = ''; // Clear previous text
                 clearMessage();
             } else {
                 selectedFileDisplay.classList.add('hidden');
-                // compressionOptionsDiv.classList.add('hidden'); // Sidebar is always visible
-                compressButton.disabled = true;
+                convertToTextButton.disabled = true;
                 clearMessage();
             }
         }
 
         /**
-         * Handles PDF compression by sending the file to the Render.com Backend.
+         * Handles PDF to Text conversion by sending the file to the Render.com Backend.
          */
-        async function compressPdf() {
+        async function convertToText() {
             if (!selectedPdfFile) {
                 displayMessage('Please select a PDF file first.', 'error');
                 return;
             }
 
-            displayMessage('Sending PDF for compression... This may take a moment.', 'loading');
-            compressButton.disabled = true;
-            downloadSection.classList.add('hidden'); // Hide previous download link
+            displayMessage('Extracting text from PDF... This may take a moment.', 'loading');
+            convertToTextButton.disabled = true;
+            extractedTextSection.classList.add('hidden'); // Hide previous results
 
             try {
                 // Read file as ArrayBuffer
@@ -487,12 +357,11 @@
 
                 const payload = {
                     pdfFileBase64: base64Pdf,
-                    compressionLevel: currentCompressionLevel, // Send the dynamically selected level
                     fileName: selectedPdfFile.name // Pass original file name for response
                 };
 
-                // --- UPDATED BACKEND ENDPOINT FOR RENDER.COM ---
-                const backendUrl = 'https://mypdfbackend.onrender.com/compress-pdf'; 
+                // --- BACKEND ENDPOINT FOR RENDER.COM ---
+                const backendUrl = 'https://mypdfbackend.onrender.com/pdf-to-text';
 
                 const response = await fetch(backendUrl, {
                     method: 'POST',
@@ -507,40 +376,37 @@
                     throw new Error(errorData.error || `Backend responded with status ${response.status}`);
                 }
 
-                const responseBody = await response.json(); 
-
-                if (!responseBody.body || !responseBody.isBase64Encoded) {
-                     throw new Error('Invalid response from backend. Expected base64 encoded PDF body within JSON.');
+                const result = await response.json();
+                // --- FIX: Correctly get and decode the base64 text from the backend response ---
+                const base64ExtractedText = result.fileContentBase64;
+                if (!base64ExtractedText) {
+                    throw new Error('No extracted text found in backend response.');
                 }
+                const extractedText = atob(base64ExtractedText); // Decode base64 to plain text
+                // --- END FIX ---
 
-                const compressedPdfBytes = Uint8Array.from(atob(responseBody.body), c => c.charCodeAt(0));
-                const compressedPdfBlob = new Blob([compressedPdfBytes], { type: 'application/pdf' });
-                const compressedPdfUrl = URL.createObjectURL(compressedPdfBlob);
+                const outputFileName = result.fileName || `${selectedPdfFile.name.replace(/\.pdf$/, '')}.txt`;
 
-                const filename = responseBody.fileName || `compressed_${selectedPdfFile.name}`;
-                const returnedOriginalSize = responseBody.originalSize || selectedPdfFile.size;
-                const returnedCompressedSize = responseBody.compressedSize || compressedPdfBlob.size;
+                extractedTextArea.value = extractedText;
+                extractedTextSection.classList.remove('hidden');
 
-                const reduction = returnedOriginalSize - returnedCompressedSize;
-                const percentageReduction = returnedOriginalSize > 0 ? ((reduction / returnedOriginalSize) * 100).toFixed(2) : 0;
+                // Create a Blob for the text file and a download link
+                const textBlob = new Blob([extractedText], { type: 'text/plain' });
+                const textUrl = URL.createObjectURL(textBlob);
 
-                compressionResultPara.textContent = `Original: ${formatBytes(returnedOriginalSize)}, Compressed: ${formatBytes(returnedCompressedSize)} (${percentageReduction}% reduction)`;
-                
-                downloadLink.href = compressedPdfUrl;
-                downloadLink.download = filename;
-                downloadLink.textContent = `Download ${filename}`;
+                downloadTextLink.href = textUrl;
+                downloadTextLink.download = outputFileName;
+                downloadTextLink.textContent = `Download ${outputFileName}`;
 
+                displayMessage('Text extracted successfully! You can view it below or download it.', 'success');
 
-                downloadSection.classList.remove('hidden');
-                displayMessage('PDF compressed successfully! Click "Download Compressed PDF".', 'success');
-
-                setTimeout(() => URL.revokeObjectURL(compressedPdfUrl), 30000);
+                setTimeout(() => URL.revokeObjectURL(textUrl), 30000); // Clean up object URL after a delay
 
             } catch (error) {
-                console.error('Error during PDF compression:', error);
-                displayMessage(`Failed to compress PDF: ${error.message}. Please check backend server logs for details.`, 'error');
+                console.error('Error during PDF to text conversion:', error);
+                displayMessage(`Failed to extract text: ${error.message}. Please check backend server logs for details.`, 'error');
             } finally {
-                compressButton.disabled = false;
+                convertToTextButton.disabled = false;
             }
         }
 
@@ -560,7 +426,7 @@
                 return;
             }
             if (files.length > 1) {
-                displayMessage('Only one PDF file can be selected for compression.', 'error');
+                displayMessage('Only one PDF file can be selected for conversion.', 'error');
                 pdfFileInput.value = ''; // Clear input
                 updateSelectedFileDisplay();
                 return;
@@ -579,20 +445,16 @@
             selectedFileDisplay = document.getElementById('selectedFileDisplay');
             fileNameSpan = document.getElementById('fileName');
             fileSizeSpan = document.getElementById('fileSize');
-            compressionOptionsDiv = document.getElementById('compress-options'); // Specific ID for the panel
-            compressionLevelList = document.getElementById('compressionLevelSelect'); // UL element
-            compressButton = document.getElementById('compressButton');
+            convertToTextButton = document.getElementById('convertToTextButton');
             messageBox = document.getElementById('messageBox');
-            downloadSection = document.getElementById('downloadSection');
-            downloadLink = document.getElementById('downloadLink');
-            compressionResultPara = document.getElementById('compressionResult');
-
+            extractedTextSection = document.getElementById('extractedTextSection');
+            extractedTextArea = document.getElementById('extractedTextArea');
+            downloadTextLink = document.getElementById('downloadTextLink');
 
             // Attach event listeners
             pdfFileInput.addEventListener('change', window.handleFileChange);
-            compressionLevelList.addEventListener('click', handleCompressionLevelSelect); // Event listener for the UL
-            // Note: compressButton.onclick is set directly in HTML, so no need for addEventListener here
-            // compressButton.addEventListener('click', window.compressPdf);
+            // Note: convertToTextButton.onclick is set directly in HTML, so no need for addEventListener here
+            // convertToTextButton.addEventListener('click', window.convertToText);
 
             // Drag and Drop
             dropArea.addEventListener('dragover', (e) => {
@@ -617,7 +479,7 @@
                         return;
                     }
                     if (files.length > 1) {
-                        displayMessage('Only one PDF file can be dropped for compression.', 'error');
+                        displayMessage('Only one PDF file can be dropped for conversion.', 'error');
                         return;
                     }
 
@@ -634,7 +496,7 @@
             updateSelectedFileDisplay();
 
             // Expose function to global window for inline onclick (already handled by the event listener if applicable)
-            // window.compressPdf = compressPdf; // Keep if using inline onclick
+            // window.convertToText = convertToText; // Keep if using inline onclick
         });
     </script>
 </body>
