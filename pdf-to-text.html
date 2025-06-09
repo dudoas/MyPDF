@@ -38,13 +38,13 @@
             border-radius: 1rem;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
             padding: 2.5rem;
-            max-width: 800px; /* Adjusted for single column */
+            max-width: 800px;
             width: 100%;
             text-align: center;
             animation: fadeIn 0.5s ease-out;
             margin: auto;
             display: flex;
-            flex-direction: column; /* Single column layout */
+            flex-direction: column;
             gap: 1.5rem;
             align-items: center;
         }
@@ -71,7 +71,7 @@
             border-color: #3b82f6;
         }
         .action-button {
-            background-image: linear-gradient(to right, #3b82f6, #2563eb); /* Blue gradient */
+            background-image: linear-gradient(to right, #3b82f6, #2563eb);
             color: white;
             padding: 0.85rem 2rem;
             border-radius: 0.75rem;
@@ -259,7 +259,6 @@
 
             <div id="extractedTextSection" class="download-section hidden">
                 <p class="text-gray-600 mb-2">Extracted Text:</p>
-                <!-- Use a textarea to display extracted text -->
                 <textarea id="extractedTextArea" class="extracted-text-area" readonly></textarea>
                 <a id="downloadTextLink" href="#" class="action-button" style="background-image: none; background-color: #3b82f6; margin-top: 1rem;">Download Text File</a>
             </div>
@@ -362,7 +361,7 @@
                 };
 
                 // --- BACKEND ENDPOINT FOR RENDER.COM ---
-                const backendUrl = 'https://mypdfbackend.onrender.com/pdf-to-text';
+                const backendUrl = 'https://mypdfbackend.onrender.com/pdf-to-text'; // Correct endpoint
 
                 const response = await fetch(backendUrl, {
                     method: 'POST',
@@ -378,20 +377,22 @@
                 }
 
                 const result = await response.json();
-                // CORRECTED: Extract fileContentBase64 and then decode it using TextDecoder
-                const extractedTextBase64 = result.fileContentBase64 || ''; 
-                // Convert base64 string to a Uint8Array
-                const decodedBytes = Uint8Array.from(atob(extractedTextBase64), c => c.charCodeAt(0));
-                // Use TextDecoder to correctly decode UTF-8 bytes into a JavaScript string
+                const base64ExtractedText = result.fileContentBase64;
+                if (!base64ExtractedText) {
+                    throw new Error('No extracted text found in backend response.');
+                }
+                // --- CORRECTED DECODING FOR UTF-8 TEXT ---
+                const decodedBytes = Uint8Array.from(atob(base64ExtractedText), c => c.charCodeAt(0));
                 const extractedText = new TextDecoder('utf-8').decode(decodedBytes);
+                // --- END CORRECTED DECODING ---
 
                 const outputFileName = result.fileName || `${selectedPdfFile.name.replace(/\.pdf$/, '')}.txt`;
 
-                extractedTextArea.value = extractedText; // Set the value of the textarea
+                extractedTextArea.value = extractedText;
                 extractedTextSection.classList.remove('hidden');
 
                 // Create a Blob for the text file and a download link
-                const textBlob = new Blob([extractedText], { type: 'text/plain;charset=utf-8' }); // Specify UTF-8 charset for the blob
+                const textBlob = new Blob([extractedText], { type: 'text/plain;charset=utf-8' }); // Specify UTF-8 charset
                 const textUrl = URL.createObjectURL(textBlob);
 
                 downloadTextLink.href = textUrl;
