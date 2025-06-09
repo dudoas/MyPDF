@@ -327,8 +327,8 @@
                             <p>Good balance between file size and quality.</p>
                         </div>
                     </li>
-                    <li class="option-item" data-level="low">
-                        <input type="radio" name="compression" id="low" value="low">
+                    <li class="option-item" data-level="less">
+                        <input type="radio" name="compression" id="low" value="less">
                         <div class="option-item-content">
                             <h3>Less Compression</h3>
                             <p>High quality, slightly larger file size.</p>
@@ -535,11 +535,20 @@
         function resetApp() {
             selectedPdfFile = null;
             selectedCompressionLevel = 'recommended'; // Reset to default
-            // Visually select the 'recommended' radio button
-            document.getElementById('recommended').checked = true;
-            document.querySelector('.option-item.selected')?.classList.remove('selected');
-            document.querySelector('.option-item[data-level="recommended"]').classList.add('selected');
-
+            // Visually select the 'recommended' radio button and its container
+            const recommendedRadio = document.getElementById('recommended');
+            if (recommendedRadio) {
+                recommendedRadio.checked = true;
+                // Manually trigger the visual selection logic for the default
+                document.querySelectorAll('.option-item').forEach(item => {
+                    item.classList.remove('selected');
+                });
+                const recommendedLi = document.querySelector('.option-item[data-level="recommended"]');
+                if (recommendedLi) {
+                    recommendedLi.classList.add('selected');
+                }
+            }
+            
             updateSelectedFileDisplay(); // This will hide file info and results
             dropArea.classList.remove('hidden'); // Show the drop area again
             pdfFileInput.value = ''; // Clear file input
@@ -599,17 +608,16 @@
             compressButton.addEventListener('click', compressPdf);
             compressAnotherButton.addEventListener('click', resetApp);
 
-            // Handle radio button selection
+            // Handle radio button selection (and its visual container)
             optionSelect.addEventListener('change', (e) => {
                 if (e.target.name === 'compression') {
                     selectedCompressionLevel = e.target.value;
+                    // Remove 'selected' from all items first
                     document.querySelectorAll('.option-item').forEach(item => {
-                        if (item.dataset.level === selectedCompressionLevel) {
-                            item.classList.add('selected');
-                        } else {
-                            item.classList.remove('selected');
-                        }
+                        item.classList.remove('selected');
                     });
+                    // Add 'selected' to the parent <li> of the checked radio button
+                    e.target.closest('.option-item').classList.add('selected');
                 }
             });
             // Also handle click on the li for visual selection (makes it easier to click)
@@ -623,7 +631,6 @@
                     }
                 }
             });
-
 
             // Drag and Drop
             dropArea.addEventListener('dragover', (e) => {
