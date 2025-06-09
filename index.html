@@ -38,7 +38,7 @@
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Responsive grid */
             gap: 1.5rem;
-            max-width: 960px; /* Limit grid width */
+            max-width: 1200px; /* Increased max-width to accommodate more columns if needed */
             width: 100%;
             padding: 0 1rem;
             margin: 0 auto; /* Center the grid */
@@ -66,8 +66,24 @@
             width: 64px;
             height: 64px;
             margin-bottom: 1rem;
-            color: #4f46e5; /* A primary blue for icons */
+            /* Default icon color, overridden by specific bg-color/text-color classes */
+            color: currentColor; 
         }
+        /* Specific icon colors based on the screenshot */
+        .tool-card .bg-orange-100 .tool-icon { color: #f97316; } /* orange-600 */
+        .tool-card .bg-green-100 .tool-icon { color: #22c55e; } /* green-600 */
+        .tool-card .bg-blue-100 .tool-icon { color: #3b82f6; } /* blue-600 */
+        .tool-card .bg-red-100 .tool-icon { color: #ef4444; } /* red-600 */
+        .tool-card .bg-yellow-100 .tool-icon { color: #eab308; } /* yellow-600 */
+        .tool-card .bg-purple-100 .tool-icon { color: #a855f7; } /* purple-600 */
+        .tool-card .bg-pink-100 .tool-icon { color: #ec4899; } /* pink-600 */
+        .tool-card .bg-indigo-100 .tool-icon { color: #6366f1; } /* indigo-600 */
+        .tool-card .bg-amber-100 .tool-icon { color: #f59e0b; } /* amber-600 */
+        .tool-card .bg-lime-100 .tool-icon { color: #84cc16; } /* lime-600 */
+        .tool-card .bg-cyan-100 .tool-icon { color: #06b6d4; } /* cyan-600 */
+        .tool-card .bg-fuchsia-100 .tool-icon { color: #d946ef; } /* fuchsia-600 */
+
+
         .tool-card h3 {
             font-size: 1.5rem;
             font-weight: 700;
@@ -138,7 +154,10 @@
             <a href="mergepdf.html" class="text-gray-700 hover:text-red-600 font-medium transition-colors duration-300">Merge PDF</a>
             <a href="splitpdf.html" class="text-gray-700 hover:text-red-600 font-medium transition-colors duration-300">Split PDF</a>
             <a href="compresspdf.html" class="text-gray-700 hover:text-red-600 font-medium transition-colors duration-300">Compress PDF</a>
-            <!-- PDF to Text link removed -->
+            <!-- Added other major tools to navigation -->
+            <a href="#" class="text-gray-700 hover:text-red-600 font-medium transition-colors duration-300">PDF to Word</a>
+            <a href="#" class="text-gray-700 hover:text-red-600 font-medium transition-colors duration-300">PDF to JPG</a>
+            <a href="#" class="text-gray-700 hover:text-red-600 font-medium transition-colors duration-300">Edit PDF</a>
         </nav>
 
         <!-- User Actions (Desktop) -->
@@ -173,7 +192,7 @@
             <!-- Tool Item: Merge PDF -->
             <a href="mergepdf.html" class="tool-card">
                 <div class="bg-orange-100 p-4 rounded-full mb-4">
-                    <svg class="w-10 h-10 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <svg class="tool-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m0 0H6"></path>
                     </svg>
                 </div>
@@ -184,7 +203,7 @@
             <!-- Tool Item: Split PDF -->
             <a href="splitpdf.html" class="tool-card">
                 <div class="bg-orange-100 p-4 rounded-full mb-4">
-                    <svg class="w-10 h-10 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <svg class="tool-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
                     </svg>
                 </div>
@@ -195,7 +214,7 @@
             <!-- Tool Item: Compress PDF -->
             <a href="compresspdf.html" class="tool-card">
                 <div class="bg-green-100 p-4 rounded-full mb-4">
-                    <svg class="w-10 h-10 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <svg class="tool-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13l-3 3m0 0l-3-3m3 3V8m0 13a9 9 S0 110-18 9 9 0 010 18z"></path>
                     </svg>
                 </div>
@@ -203,106 +222,269 @@
                 <p class="text-gray-600 text-sm">Reduce file size while optimizing for maximal PDF quality.</p>
             </a>
 
-            <!-- Tool Item: PDF to Word (Placeholder - no linked page) -->
-            <div class="tool-card">
+            <!-- Tool Item: PDF to Word -->
+            <a href="#" class="tool-card">
                 <div class="bg-blue-100 p-4 rounded-full mb-4">
-                    <svg class="w-10 h-10 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <svg class="tool-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h4l1-1 9.75-10.25a2.25 2.25 0 000-3.25L13.25 3z"></path>
                     </svg>
                 </div>
                 <h3 class="text-xl font-semibold text-gray-800 mb-2">PDF to Word</h3>
                 <p class="text-gray-600 text-sm">Convert your PDF files into easy to edit DOC and DOCX documents.</p>
-            </div>
+            </a>
 
-            <!-- Tool Item: PDF to JPG (Placeholder - no linked page) -->
-            <div class="tool-card">
+            <!-- Tool Item: PDF to PowerPoint -->
+            <a href="#" class="tool-card">
+                <div class="bg-red-100 p-4 rounded-full mb-4">
+                    <svg class="tool-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a3 3 0 01-3-3V7a3 3 0 013-3h10a3 3 0 013 3v6a3 3 0 01-3 3H7zm1-5l2-2 4 4 4-4v6H8v-4z"></path>
+                    </svg>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-800 mb-2">PDF to PowerPoint</h3>
+                <p class="text-gray-600 text-sm">Turn your PDF files into easy to edit PPT and PPTX slideshows.</p>
+            </a>
+
+            <!-- Tool Item: PDF to Excel -->
+            <a href="#" class="tool-card">
+                <div class="bg-lime-100 p-4 rounded-full mb-4">
+                    <svg class="tool-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17h6m-3-3v6m-4-10l-4 4 4 4m8-8l4 4-4 4"></path>
+                    </svg>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-800 mb-2">PDF to Excel</h3>
+                <p class="text-gray-600 text-sm">Convert data straight from PDFs into Excel spreadsheets in a few short seconds.</p>
+            </a>
+
+            <!-- Tool Item: Word to PDF -->
+            <a href="#" class="tool-card">
+                <div class="bg-blue-100 p-4 rounded-full mb-4">
+                    <svg class="tool-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h4l1-1 9.75-10.25a2.25 2.25 0 000-3.25L13.25 3zM15 16h.01M9 16h.01"></path>
+                    </svg>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-800 mb-2">Word to PDF</h3>
+                <p class="text-gray-600 text-sm">Make DOC and DOCX files easy to read by converting them to PDF.</p>
+            </a>
+
+            <!-- Tool Item: PowerPoint to PDF -->
+            <a href="#" class="tool-card">
+                <div class="bg-red-100 p-4 rounded-full mb-4">
+                    <svg class="tool-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a3 3 0 01-3-3V7a3 3 0 013-3h10a3 3 0 013 3v6a3 3 0 01-3 3H7zm1-5l2-2 4 4 4-4v6H8v-4zM15 16h.01M9 16h.01"></path>
+                    </svg>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-800 mb-2">PowerPoint to PDF</h3>
+                <p class="text-gray-600 text-sm">Make PPT and PPTX slideshows easy to view by converting them to PDF.</p>
+            </a>
+
+            <!-- Tool Item: Excel to PDF -->
+            <a href="#" class="tool-card">
+                <div class="bg-lime-100 p-4 rounded-full mb-4">
+                    <svg class="tool-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17h6m-3-3v6m-4-10l-4 4 4 4m8-8l4 4-4 4M15 16h.01M9 16h.01"></path>
+                    </svg>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-800 mb-2">Excel to PDF</h3>
+                <p class="text-gray-600 text-sm">Make XLSX spreadsheets easy to read by converting them to PDF.</p>
+            </a>
+
+            <!-- Tool Item: Edit PDF -->
+            <a href="#" class="tool-card">
+                <div class="bg-cyan-100 p-4 rounded-full mb-4">
+                    <svg class="tool-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path>
+                    </svg>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-800 mb-2">Edit PDF</h3>
+                <p class="text-gray-600 text-sm">Add text, images, shapes or freehand annotations to PDF document. Edit the size, font, and color of the added content.</p>
+            </a>
+
+            <!-- Tool Item: PDF to JPG -->
+            <a href="#" class="tool-card">
                 <div class="bg-yellow-100 p-4 rounded-full mb-4">
-                    <svg class="w-10 h-10 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <svg class="tool-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L14 14m0 0l1.414 1.414a2 2 0 002.828 0L20 12m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
                     </svg>
                 </div>
                 <h3 class="text-xl font-semibold text-gray-800 mb-2">PDF to JPG</h3>
                 <p class="text-gray-600 text-sm">Convert each PDF page into a JPG or extract all images contained in a PDF.</p>
-            </div>
+            </a>
 
-            <!-- Tool Item: PDF to Text - REMOVED from here -->
-
-            <!-- Tool Item: Protect PDF (Placeholder - no linked page) -->
-            <div class="tool-card">
-                <div class="bg-purple-100 p-4 rounded-full mb-4">
-                    <svg class="w-10 h-10 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+            <!-- Tool Item: JPG to PDF -->
+            <a href="#" class="tool-card">
+                <div class="bg-yellow-100 p-4 rounded-full mb-4">
+                    <svg class="tool-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4m-4 0a1 1 0 011-1h22a1 1 0 011 1zm0 0a1 1 0 001 1h22a1 1 0 001-1z"></path>
                     </svg>
                 </div>
-                <h3 class="text-xl font-semibold text-gray-800 mb-2">Protect PDF</h3>
-                <p class="text-gray-600 text-sm">Protect PDF files with a password. Encrypt documents to prevent unauthorized access.</p>
-            </div>
+                <h3 class="text-xl font-semibold text-gray-800 mb-2">JPG to PDF</h3>
+                <p class="text-gray-600 text-sm">Convert JPG images to PDF in seconds. Easily adjust orientation and margins.</p>
+            </a>
 
-            <!-- Tool Item: Sign PDF (Placeholder - no linked page) -->
-            <div class="tool-card">
+            <!-- Tool Item: Sign PDF -->
+            <a href="#" class="tool-card">
                 <div class="bg-pink-100 p-4 rounded-full mb-4">
-                    <svg class="w-10 h-10 text-pink-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <svg class="tool-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h10a2 2 0 012 2v12a2 2 0 01-2 2z"></path>
                     </svg>
                 </div>
                 <h3 class="text-xl font-semibold text-gray-800 mb-2">Sign PDF</h3>
                 <p class="text-gray-600 text-sm">Sign yourself or request electronic signatures from others.</p>
-            </div>
+            </a>
 
-            <!-- Tool Item: Rotate PDF (Placeholder - no linked page) -->
-            <div class="tool-card">
+            <!-- Tool Item: Watermark -->
+            <a href="#" class="tool-card">
+                <div class="bg-purple-100 p-4 rounded-full mb-4">
+                    <svg class="tool-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 12V4m-4 8V4m-4 8V4m0 0L4 7m8-3l4 3m0 0l4-3m-4 0a2 2 0 012-2h0a2 2 0 012 2v12a2 2 0 01-2 2H6a2 2 0 01-2-2V6a2 2 0 012-2z"></path>
+                    </svg>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-800 mb-2">Watermark</h3>
+                <p class="text-gray-600 text-sm">Stamp an image or text over your PDF in seconds. Choose the typography, transparency and position.</p>
+            </a>
+
+            <!-- Tool Item: Rotate PDF -->
+            <a href="#" class="tool-card">
                 <div class="bg-indigo-100 p-4 rounded-full mb-4">
-                    <svg class="w-10 h-10 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <svg class="tool-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                     </svg>
                 </div>
                 <h3 class="text-xl font-semibold text-gray-800 mb-2">Rotate PDF</h3>
-                <p class="text-gray-600 text-sm">Rotate your PDFs the way you need them. You can even rotate multiple PDFs at once!</p>
-            </div>
+                <p class="text-gray-600 text-sm">Rotate your PDF the way you need them. You can even rotate multiple PDFs at once!</p>
+            </a>
 
-            <!-- Tool Item: HTML to PDF (Placeholder - no linked page) -->
-            <div class="tool-card">
+            <!-- Tool Item: HTML to PDF -->
+            <a href="#" class="tool-card">
                 <div class="bg-amber-100 p-4 rounded-full mb-4">
-                    <svg class="w-10 h-10 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <svg class="tool-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 20L2 16l4-4"></path>
                     </svg>
                 </div>
                 <h3 class="text-xl font-semibold text-gray-800 mb-2">HTML to PDF</h3>
                 <p class="text-gray-600 text-sm">Convert webpages in HTML to PDF. Copy and paste the URL and convert with a click.</p>
-            </div>
+            </a>
 
-            <!-- Tool Item: Unlock PDF (Placeholder - no linked page) -->
-            <div class="tool-card">
+            <!-- Tool Item: Unlock PDF -->
+            <a href="#" class="tool-card">
                 <div class="bg-blue-100 p-4 rounded-full mb-4">
-                    <svg class="w-10 h-10 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <svg class="tool-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 11V7a4 4 0 118 0m-4 8v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2z"></path>
                     </svg>
                 </div>
                 <h3 class="text-xl font-semibold text-gray-800 mb-2">Unlock PDF</h3>
                 <p class="text-gray-600 text-sm">Remove PDF password security, giving you the freedom to use your PDFs as you want.</p>
-            </div>
+            </a>
 
-            <!-- Tool Item: Organize PDF (Placeholder - no linked page) -->
-            <div class="tool-card">
+            <!-- Tool Item: Protect PDF -->
+            <a href="#" class="tool-card">
+                <div class="bg-purple-100 p-4 rounded-full mb-4">
+                    <svg class="tool-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+                    </svg>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-800 mb-2">Protect PDF</h3>
+                <p class="text-gray-600 text-sm">Protect PDF files with a password. Encrypt documents to prevent unauthorized access.</p>
+            </a>
+
+            <!-- Tool Item: Organize PDF -->
+            <a href="#" class="tool-card">
                 <div class="bg-red-100 p-4 rounded-full mb-4">
-                    <svg class="w-10 h-10 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <svg class="tool-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 4H6a2 2 0 00-2 2v12a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-2m-4-1v8m0-8V1m0 10v8m0-8h1m-1 0H7m0 0h10m-7 4h1m-1 0H7m0 0h10"></path>
                     </svg>
                 </div>
                 <h3 class="text-xl font-semibold text-gray-800 mb-2">Organize PDF</h3>
                 <p class="text-gray-600 text-sm">Sort pages of your PDF file however you like. Delete or add pages at your convenience.</p>
-            </div>
+            </a>
 
-            <!-- Tool Item: Create Blank PDF (Placeholder - no linked page) -->
-            <div class="tool-card">
-                <div class="bg-gray-100 p-4 rounded-full mb-4">
-                    <svg class="w-10 h-10 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <!-- Tool Item: PDF to PDF/A -->
+            <a href="#" class="tool-card">
+                <div class="bg-fuchsia-100 p-4 rounded-full mb-4">
+                    <svg class="tool-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 13h6m-3-3v6m5 5H7a2 2 0 01-2-2V5a2 2 0 012-2h10a2 2 0 012 2v12a2 2 0 01-2 2z"></path>
                     </svg>
                 </div>
-                <h3 class="text-xl font-semibold text-gray-800 mb-2">Create Blank PDF</h3>
-                <p class="text-gray-600 text-sm">Generate a new blank PDF document, optionally with custom text.</p>
-            </div>
+                <h3 class="text-xl font-semibold text-gray-800 mb-2">PDF to PDF/A</h3>
+                <p class="text-gray-600 text-sm">Transform your PDF to PDF/A, the ISO-standardized version of PDF for long-term archiving. Ideal for PDF and print/normal documents alike to succeed in the future.</p>
+            </a>
+
+            <!-- Tool Item: Repair PDF -->
+            <a href="#" class="tool-card">
+                <div class="bg-teal-100 p-4 rounded-full mb-4">
+                    <svg class="tool-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 20L2 16l4-4m12 0l-4-4"></path>
+                    </svg>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-800 mb-2">Repair PDF</h3>
+                <p class="text-gray-600 text-sm">Repair a damaged PDF and restore data from corrupt PDF. Fix your PDF with our Repair tool.</p>
+            </a>
+
+            <!-- Tool Item: Page Numbers -->
+            <a href="#" class="tool-card">
+                <div class="bg-gray-100 p-4 rounded-full mb-4">
+                    <svg class="tool-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m0 0H6m-4 0a1 1 0 011-1h22a1 1 0 011 1zm0 0a1 1 0 001 1h22a1 1 0 001-1z"></path>
+                    </svg>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-800 mb-2">Page numbers</h3>
+                <p class="text-gray-600 text-sm">Add page numbers into PDFs with ease. Choose your positions, dimensions, typography.</p>
+            </a>
+
+            <!-- Tool Item: Scan to PDF -->
+            <a href="#" class="tool-card">
+                <div class="bg-blue-100 p-4 rounded-full mb-4">
+                    <svg class="tool-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13l-3 3m0 0l-3-3m3 3V8m0 13a9 9 S0 110-18 9 9 0 010 18z"></path>
+                    </svg>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-800 mb-2">Scan to PDF</h3>
+                <p class="text-gray-600 text-sm">Capture documents scans from your mobile device and send them instantly to your browser.</p>
+            </a>
+
+            <!-- Tool Item: OCR PDF -->
+            <a href="#" class="tool-card">
+                <div class="bg-blue-100 p-4 rounded-full mb-4">
+                    <svg class="tool-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m0 0H6m-4 0a1 1 0 011-1h22a1 1 0 011 1zm0 0a1 1 0 001 1h22a1 1 0 001-1z"></path>
+                    </svg>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-800 mb-2">OCR PDF</h3>
+                <p class="text-gray-600 text-sm">Easily convert scanned PDF into searchable and selectable documents.</p>
+            </a>
+
+            <!-- Tool Item: Compare PDF -->
+            <a href="#" class="tool-card">
+                <div class="bg-blue-100 p-4 rounded-full mb-4">
+                    <svg class="tool-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7v10m8-10v10M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                    </svg>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-800 mb-2">Compare PDF</h3>
+                <p class="text-gray-600 text-sm">Show a side-by-side document comparison and easily spot changes between different file versions.</p>
+            </a>
+
+            <!-- Tool Item: Redact PDF -->
+            <a href="#" class="tool-card">
+                <div class="bg-red-100 p-4 rounded-full mb-4">
+                    <svg class="tool-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 11h.01M12 15h.01M9 17L3 20l4-4M15 17L21 20l-4-4M3 8V4m0 0a2 2 0 012-2h4a2 2 0 012 2v4M21 8V4m0 0a2 2 0 00-2-2h-4a2 2 0 00-2 2v4"></path>
+                    </svg>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-800 mb-2">Redact PDF</h3>
+                <p class="text-gray-600 text-sm">Redact text and graphics to permanently remove sensitive information from a PDF.</p>
+            </a>
+
+            <!-- Tool Item: Crop PDF -->
+            <a href="#" class="tool-card">
+                <div class="bg-yellow-100 p-4 rounded-full mb-4">
+                    <svg class="tool-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6H12v2.25m4.5-16h-4.5V11.25m8.25-6.75V12M15 12a3 3 0 00-3-3H6"></path>
+                    </svg>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-800 mb-2">Crop PDF</h3>
+                <p class="text-gray-600 text-sm">Crop margins of PDF documents or select specific area, then apply the changes to one page or the whole document.</p>
+            </a>
 
         </div>
     </section>
