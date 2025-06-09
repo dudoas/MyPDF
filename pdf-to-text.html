@@ -259,6 +259,7 @@
 
             <div id="extractedTextSection" class="download-section hidden">
                 <p class="text-gray-600 mb-2">Extracted Text:</p>
+                <!-- Use a textarea to display extracted text -->
                 <textarea id="extractedTextArea" class="extracted-text-area" readonly></textarea>
                 <a id="downloadTextLink" href="#" class="action-button" style="background-image: none; background-color: #3b82f6; margin-top: 1rem;">Download Text File</a>
             </div>
@@ -377,10 +378,13 @@
                 }
 
                 const result = await response.json();
-                const extractedText = result.text || ''; // Ensure 'text' field is retrieved
+                // CORRECTED: Extract fileContentBase64 and then decode it
+                const extractedTextBase64 = result.fileContentBase64 || ''; 
+                const extractedText = atob(extractedTextBase64); // Decode base64 to plain text
+
                 const outputFileName = result.fileName || `${selectedPdfFile.name.replace(/\.pdf$/, '')}.txt`;
 
-                extractedTextArea.value = extractedText;
+                extractedTextArea.value = extractedText; // Set the value of the textarea
                 extractedTextSection.classList.remove('hidden');
 
                 // Create a Blob for the text file and a download link
@@ -446,7 +450,7 @@
 
             // Attach event listeners
             pdfFileInput.addEventListener('change', window.handleFileChange);
-            // Note: convertToTextButton.onclick is set directly in HTML, so no need for addEventListener here
+            // The onclick="window.convertToText()" is already in HTML, so no need for addEventListener here
             // convertToTextButton.addEventListener('click', window.convertToText);
 
             // Drag and Drop
@@ -488,8 +492,8 @@
             // Initial UI state
             updateSelectedFileDisplay();
 
-            // Expose function to global window for inline onclick (already handled by the event listener if applicable)
-            // window.convertToText = convertToText; // Keep if using inline onclick
+            // Expose function to global window for inline onclick
+            // window.convertToText = convertToText; 
         });
     </script>
 </body>
